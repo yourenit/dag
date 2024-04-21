@@ -1,0 +1,146 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "name": "myRequest",
+      "id": "b5142e73-7543-4625-8069-fdf9bec58f58",
+      "position": {
+        "x": 320,
+        "y": 295
+      },
+      "type": "inputNode"
+    },
+    {
+      "name": "myResponse",
+      "id": "a45e815f-5042-4736-848b-2ea24ece3fb7",
+      "position": {
+        "x": 1445,
+        "y": 315
+      },
+      "type": "outputNode"
+    },
+    {
+      "name": "mySwitch",
+      "content": {
+        "statements": [
+          {
+            "id": "97fc6281-326c-4b8c-a135-ef3cbf050bd8",
+            "condition": "a == 1"
+          },
+          {
+            "id": "03250569-f9a0-4085-9fb2-6e2988d1c204",
+            "condition": "a == 2"
+          }
+        ]
+      },
+      "id": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "position": {
+        "x": 730,
+        "y": 250
+      },
+      "type": "switchNode"
+    },
+    {
+      "name": "myDecisionTable",
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "2a3cfc53-b276-43be-b127-50ccca4728db",
+            "name": "Input",
+            "type": "expression"
+          }
+        ],
+        "outputs": [
+          {
+            "field": "output",
+            "id": "7a6e7c96-d389-4ccd-88c4-331a3c0e0c26",
+            "name": "Output",
+            "type": "expression"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "7fda238c-754a-4fdc-b73c-a813527935bf",
+            "2a3cfc53-b276-43be-b127-50ccca4728db": "a == 1",
+            "7a6e7c96-d389-4ccd-88c4-331a3c0e0c26": "123"
+          }
+        ]
+      },
+      "id": "1adc8430-a94d-42b8-ba23-0ca1760c6013",
+      "position": {
+        "x": 1080,
+        "y": 320
+      },
+      "type": "decisionTableNode"
+    },
+    {
+      "name": "myDecisionTable",
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "12137fb4-2f7d-4437-bcbe-0c1e0ff7e4c4",
+            "name": "Input",
+            "type": "expression"
+          }
+        ],
+        "outputs": [
+          {
+            "field": "output",
+            "id": "5117c0ab-a37b-423d-bca0-504573962ed6",
+            "name": "Output",
+            "type": "expression"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "2785b98f-f75d-4d4e-9566-f8f6fba3699e",
+            "12137fb4-2f7d-4437-bcbe-0c1e0ff7e4c4": "a==2",
+            "5117c0ab-a37b-423d-bca0-504573962ed6": "345"
+          }
+        ]
+      },
+      "id": "2e021bc6-265c-49e1-94ec-1ca112e54387",
+      "position": {
+        "x": 1090,
+        "y": 460
+      },
+      "type": "decisionTableNode"
+    }
+  ],
+  "edges": [
+    {
+      "id": "744c9b6a-a8ae-49a3-b56a-45bc2b67f068",
+      "sourceId": "b5142e73-7543-4625-8069-fdf9bec58f58",
+      "type": "edge",
+      "targetId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0"
+    },
+    {
+      "id": "4dfbb45c-036b-4271-8eec-b7ad096f7bf4",
+      "sourceId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "type": "edge",
+      "targetId": "1adc8430-a94d-42b8-ba23-0ca1760c6013",
+      "sourceHandle": "97fc6281-326c-4b8c-a135-ef3cbf050bd8"
+    },
+    {
+      "id": "a3a23013-0a03-4bcc-b130-ffdbb7609e44",
+      "sourceId": "1adc8430-a94d-42b8-ba23-0ca1760c6013",
+      "type": "edge",
+      "targetId": "a45e815f-5042-4736-848b-2ea24ece3fb7"
+    },
+    {
+      "id": "820d2878-18a2-47d9-b631-8c324fa7cd83",
+      "sourceId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "type": "edge",
+      "targetId": "2e021bc6-265c-49e1-94ec-1ca112e54387",
+      "sourceHandle": "03250569-f9a0-4085-9fb2-6e2988d1c204"
+    },
+    {
+      "id": "61122f37-6b8d-42ae-a209-0d012535e507",
+      "sourceId": "2e021bc6-265c-49e1-94ec-1ca112e54387",
+      "type": "edge",
+      "targetId": "a45e815f-5042-4736-848b-2ea24ece3fb7"
+    }
+  ]
+}

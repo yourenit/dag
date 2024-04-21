@@ -1,0 +1,65 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "name": "myRequest",
+      "id": "19c8de3d-ff72-4128-9af2-089251363ffc",
+      "position": {
+        "x": 265,
+        "y": 310
+      },
+      "type": "inputNode"
+    },
+    {
+      "name": "myExpression",
+      "content": {
+        "expressions": [
+          {
+            "id": "572dd995-c0e3-406f-ab1b-54adffc5b662",
+            "key": "sum",
+            "value": "sum(a,10)"
+          },
+          {
+            "id": "a933fb6d-94e6-4e63-b7e9-c2b780387622",
+            "key": "mul",
+            "value": "mul(a,10)"
+          },
+          {
+            "id": "a933fb6d-94e6-4e63-b7e9-c2b780387623",
+            "key": "test",
+            "value": "test()"
+          }
+        ]
+      },
+      "id": "eb77bc15-964c-4940-bde3-5adef0292c44",
+      "position": {
+        "x": 600,
+        "y": 305
+      },
+      "type": "expressionNode"
+    },
+    {
+      "name": "myResponse",
+      "id": "34c1d750-26b2-4af5-a60b-0d2d8a7e4db5",
+      "position": {
+        "x": 990,
+        "y": 320
+      },
+      "type": "outputNode"
+    }
+  ],
+  "edges": [
+    {
+      "id": "3d9ab329-ea6a-407c-a56d-9478715285bd",
+      "sourceId": "19c8de3d-ff72-4128-9af2-089251363ffc",
+      "type": "edge",
+      "targetId": "eb77bc15-964c-4940-bde3-5adef0292c44"
+    },
+    {
+      "id": "a4d75b57-c102-4ce7-bfaa-0ec44bb39f8e",
+      "sourceId": "eb77bc15-964c-4940-bde3-5adef0292c44",
+      "type": "edge",
+      "targetId": "34c1d750-26b2-4af5-a60b-0d2d8a7e4db5"
+    }
+  ]
+}

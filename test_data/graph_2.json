@@ -1,0 +1,66 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "name": "myRequest",
+      "id": "b5142e73-7543-4625-8069-fdf9bec58f58",
+      "position": {
+        "x": 320,
+        "y": 295
+      },
+      "type": "inputNode"
+    },
+    {
+      "name": "myResponse",
+      "id": "a45e815f-5042-4736-848b-2ea24ece3fb7",
+      "position": {
+        "x": 1255,
+        "y": 310
+      },
+      "type": "outputNode"
+    },
+    {
+      "name": "mySwitch",
+      "content": {
+        "statements": [
+          {
+            "id": "97fc6281-326c-4b8c-a135-ef3cbf050bd8",
+            "condition": "a == 1"
+          },
+          {
+            "id": "03250569-f9a0-4085-9fb2-6e2988d1c204",
+            "condition": "a == 2"
+          }
+        ]
+      },
+      "id": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "position": {
+        "x": 730,
+        "y": 250
+      },
+      "type": "switchNode"
+    }
+  ],
+  "edges": [
+    {
+      "id": "744c9b6a-a8ae-49a3-b56a-45bc2b67f068",
+      "sourceId": "b5142e73-7543-4625-8069-fdf9bec58f58",
+      "type": "edge",
+      "targetId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0"
+    },
+    {
+      "id": "a6b1117c-7f71-4f0c-a08b-b02766650e28",
+      "sourceId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "type": "edge",
+      "targetId": "a45e815f-5042-4736-848b-2ea24ece3fb7",
+      "sourceHandle": "97fc6281-326c-4b8c-a135-ef3cbf050bd8"
+    },
+    {
+      "id": "6ce10395-9905-47a1-aedf-97b05f656fcd",
+      "sourceId": "2b7f1b84-fdfe-4595-890e-275cc7cc9ac0",
+      "type": "edge",
+      "targetId": "a45e815f-5042-4736-848b-2ea24ece3fb7",
+      "sourceHandle": "03250569-f9a0-4085-9fb2-6e2988d1c204"
+    }
+  ]
+}
