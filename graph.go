@@ -5,10 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sync"
 )
 
 type Graph struct {
 	nodes map[NodeID]*Node
+	mu    sync.Mutex
 }
 
 func NewGraph() *Graph {
@@ -18,6 +20,8 @@ func NewGraph() *Graph {
 }
 
 func (g *Graph) CreateNode(id NodeID, data interface{}) *Node {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	if _, exists := g.nodes[id]; exists {
 		return nil // Or return error, node ID already exists
 	}
@@ -30,6 +34,8 @@ func (g *Graph) CreateNode(id NodeID, data interface{}) *Node {
 }
 
 func (g *Graph) AddEdge(parentID NodeID, childID NodeID) error {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	parent, okParent := g.nodes[parentID]
 	child, okChild := g.nodes[childID]
 	if !okParent || !okChild {
@@ -74,6 +80,8 @@ func (g *Graph) hasCycleUtil(currentNode *Node, targetNode *Node, visited map[*N
 }
 
 func (g *Graph) DeleteNode(nodeID NodeID) error {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	node, ok := g.nodes[nodeID]
 	if !ok {
 		return errors.New("node not found")
@@ -94,6 +102,8 @@ func (g *Graph) DeleteNode(nodeID NodeID) error {
 }
 
 func (g *Graph) removeEdgeFromParent(parent *Node, child *Node) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	for i, c := range parent.Children {
 		if c == child {
 			parent.Children = append(parent.Children[:i], parent.Children[i+1:]...)
@@ -103,6 +113,8 @@ func (g *Graph) removeEdgeFromParent(parent *Node, child *Node) {
 }
 
 func (g *Graph) removeEdgeFromChild(child *Node, parent *Node) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	for i, p := range child.Parents {
 		if p == parent {
 			child.Parents = append(child.Parents[:i], child.Parents[i+1:]...)
@@ -112,6 +124,8 @@ func (g *Graph) removeEdgeFromChild(child *Node, parent *Node) {
 }
 
 func (g *Graph) DeleteEdge(parentID NodeID, childID NodeID) error {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	parent, okParent := g.nodes[parentID]
 	child, okChild := g.nodes[childID]
 	if !okParent || !okChild {
@@ -124,6 +138,8 @@ func (g *Graph) DeleteEdge(parentID NodeID, childID NodeID) error {
 }
 
 func (g *Graph) GetParents(nodeID NodeID) ([]*Node, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	node, ok := g.nodes[nodeID]
 	if !ok {
 		return nil, errors.New("node not found")
@@ -132,6 +148,8 @@ func (g *Graph) GetParents(nodeID NodeID) ([]*Node, error) {
 }
 
 func (g *Graph) GetChildren(nodeID NodeID) ([]*Node, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	node, ok := g.nodes[nodeID]
 	if !ok {
 		return nil, errors.New("node not found")
@@ -140,6 +158,8 @@ func (g *Graph) GetChildren(nodeID NodeID) ([]*Node, error) {
 }
 
 func (g *Graph) DFS(startNodeID NodeID) ([]*Node, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	startNode, ok := g.nodes[startNodeID]
 	if !ok {
 		return nil, errors.New("start node not found")
@@ -148,7 +168,7 @@ func (g *Graph) DFS(startNodeID NodeID) ([]*Node, error) {
 	visited := make(map[*Node]bool)
 	var result []*Node
 	stack := []*Node{startNode} // 使用栈代替递归
-
+	
 	visited[startNode] = true // 标记起始节点为已访问
 
 	for len(stack) > 0 {
@@ -173,6 +193,8 @@ func (g *Graph) DFS(startNodeID NodeID) ([]*Node, error) {
 // }
 
 func (g *Graph) BFS(startNodeID NodeID) ([]*Node, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	startNode, ok := g.nodes[startNodeID]
 	if !ok {
 		return nil, errors.New("start node not found")
@@ -199,6 +221,8 @@ func (g *Graph) BFS(startNodeID NodeID) ([]*Node, error) {
 }
 
 func (g *Graph) TopologicalSort() ([]*Node, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	inDegree := make(map[NodeID]int)
 	for _, node := range g.nodes {
 		inDegree[node.NodeIDValue] = 0
@@ -280,6 +304,8 @@ func (g *Graph) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON 实现了 json.Unmarshaler 接口，用于自定义反序列化
 func (g *Graph) UnmarshalJSON(data []byte) error {
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	jsonGraph := jsonGraph{}
 	if err := json.Unmarshal(data, &jsonGraph); err != nil {
 		return err
@@ -310,6 +336,8 @@ func (g *Graph) UnmarshalJSON(data []byte) error {
 
 	return nil
 }
+
+
 
 // SaveToFile 将 DAG 保存到 JSON 文件
 func (g *Graph) SaveToFile(filepath string) error {
